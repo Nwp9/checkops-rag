@@ -215,7 +215,7 @@ st.sidebar.markdown("---")
 st.sidebar.info("🔐 Données sensibles")
 
 st.sidebar.markdown(
-    "<p style='font-size:12px; color:#4A6FA5;'>Traitement conforme aux règles internes de confidentialité.</p>",
+    "<p style='font-size:12px; color:#4A6FA5;'>Traitement conforme aux règles internes de confidentialité créé par Ghood.</p>",
     unsafe_allow_html=True
 )
 
@@ -325,7 +325,7 @@ else:
     """, unsafe_allow_html=True)
 
 # ==============================
-# 💬 CHAT HISTORY DISPLAY
+# CHAT HISTORY DISPLAY
 # ==============================
 
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
