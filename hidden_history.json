@@ -1,0 +1,10 @@
+[
+  {
+    "query": "Bonjour",
+    "answer": "Bonjour, Je suis votre assistant TechnOps. Posez-moi une question sur la maintenance a\u00e9ronautique."
+  },
+  {
+    "query": "c'est quoi un APU?",
+    "answer": "Un APU (Auxiliary Power Unit) est un groupe auxiliaire de puissance. Il s'agit d'un petit moteur \u00e0 turbine g\u00e9n\u00e9ralement situ\u00e9 \u00e0 l'arri\u00e8re de l'avion. Sa fonction principale est de fournir de l'\u00e9nergie (pneumatique, \u00e9lectrique et hydraulique selon les mod\u00e8les) lorsque les moteurs principaux sont arr\u00eat\u00e9s ou au sol. L'APU permet notamment :\n\n- D\u2019alimenter les syst\u00e8mes \u00e9lectriques de l\u2019avion au sol,\n- De fournir de l\u2019air pour le d\u00e9marrage des moteurs principaux,\n- D\u2019assurer la ventilation, la climatisation et parfois la pressurisation lorsque les moteurs principaux ne sont pas en marche.\n\nL\u2019APU fonctionne ind\u00e9pendamment des moteurs principaux et il est essentiel pour les op\u00e9rations au sol, notamment lors du roulage, des op\u00e9rations de maintenance et du d\u00e9marrage des moteurs."
+  }
+]

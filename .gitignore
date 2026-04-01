@@ -1,0 +1,17 @@
+# 🔐 Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs / fichiers générés
+metrics.txt
+report.pdf
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db

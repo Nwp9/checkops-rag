@@ -1,0 +1,1 @@
+2026-03-28 23:53:16.719730 | Question (RAG) | What systems are affected by a hydraulic pump failure?
