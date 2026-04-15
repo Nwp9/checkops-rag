@@ -3,8 +3,9 @@ collection = get_collection()
 
 from core.embeddings import get_embedding
 import hashlib
-from core.vector_store import client
 import time
+
+from monitoring import chunks_indexed_total
 
 def index_chunks(chunks):
 
@@ -25,5 +26,6 @@ def index_chunks(chunks):
             }]
         )
 
-    print("Chunks indexés :", len(chunks))
-    print("Total en base :", collection.count())
+        chunks_indexed_total.inc()
+
+    return len(chunks)

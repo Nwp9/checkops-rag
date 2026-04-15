@@ -1,5 +1,4 @@
 import os
-import time
 import hashlib
 from dotenv import load_dotenv
 from openai import AzureOpenAI
@@ -15,11 +14,11 @@ from monitoring import rag_latency_seconds, retrieval_docs_count, rag_errors_tot
 
 from monitoring import (
     rag_requests_total,
-    embedding_latency_seconds,
-    chunks_indexed_total,
-    rag_similarity_score
+    rag_latency_seconds,
+    rag_similarity_score,
+    rag_errors_total
 )
-
+import time
 
 load_dotenv()
 
