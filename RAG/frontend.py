@@ -7,6 +7,15 @@ from datetime import datetime
 from core.generation import generate_answer
 from services.ocr import ingest_ocr_pipeline
 
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+from prometheus_client import start_http_server
+
+if "prometheus_started" not in st.session_state:
+    start_http_server(8000)
+    st.session_state.prometheus_started = True
+
 from corpus import (
     rag_query,
     detect_inconsistencies,
@@ -14,7 +23,8 @@ from corpus import (
     search_documents,
     no_rag_answer,
     generate_pdf,
-    extract_text_from_image
+    extract_text_from_image,
+    ingest_document
 )
 
 load_dotenv()
@@ -33,63 +43,6 @@ if st.session_state.reset_input:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# ==============================
-# 🔹 SESSION HISTORY
-# ==============================
-
-import json
-import os
-
-HISTORY_FILE = "history.json"
-
-def load_history():
-    if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r") as f:
-                content = f.read().strip()
-                if not content:
-                    return []
-                return json.loads(content)
-        except Exception:
-            return [] 
-    return []
-
-def save_history(history):
-    
-    # NE PAS écraser avec vide (sécurité)
-    if history == []:
-        return
-
-    with open(HISTORY_FILE, "w") as f:
-        json.dump(history, f, indent=2)
-
-if "history" not in st.session_state:
-    st.session_state.history = load_history()
-
-# Hidden History
-
-HIDDEN_FILE = "hidden_history.json"
-
-def load_hidden():
-    if os.path.exists(HIDDEN_FILE):
-        try:
-            with open(HIDDEN_FILE, "r") as f:
-                content = f.read().strip()
-                if not content:
-                    return []  # 🔥 fichier vide → liste vide
-                return json.loads(content)
-        except Exception:
-            return []  # 🔥 fichier corrompu → reset propre
-    return []
-
-
-def save_hidden(hidden):
-    with open(HIDDEN_FILE, "w") as f:
-        json.dump(hidden, f, indent=2)
-
-if "hidden_history" not in st.session_state:
-    st.session_state.hidden_history = load_hidden()
-
 # # ==============================
 # # 🔐 USERS (HASH)
 # # ==============================
@@ -98,24 +51,25 @@ if "hidden_history" not in st.session_state:
 
 # USERS = {
 #     "admin": {"password": hash_pwd("admin123"), "role": "admin"},
-#     "engineer": {"password": hash_pwd("engineer123"), "role": "user"}
+#     "engineer": {"password": hash_pwd("engineer123"), "role": "user"},
+#     "stagiaire": {"password": hash_pwd("stage123"), "role": "user"}
 # }
 
-# st.set_page_config(page_title="TechnOps Assistant", layout="wide", page_icon="🔩")
+# st.set_page_config(page_title="CheckOps", layout="wide", page_icon="🔩")
 
-# # ==============================
-# # 🔹 SESSION AUTH
-# # ==============================
+# # # ==============================
+# # # 🔹 SESSION AUTH
+# # # ==============================
 # if "authenticated" not in st.session_state:
 #     st.session_state.authenticated = False
 #     st.session_state.username = None
 
-# # ==============================
-# # 🔐 LOGIN
-# # ==============================
+# # # ==============================
+# # # 🔐 LOGIN
+# # # ==============================
 # def login():
 
-#     st.markdown("<h2 style='text-align:center;'>🔐 TechnOps</h2>", unsafe_allow_html=True)
+#     st.markdown("<h2 style='text-align:center;'>🔐 CheckOps</h2>", unsafe_allow_html=True)
 
 #     col1, col2, col3 = st.columns([1,2,1])
 
@@ -131,9 +85,9 @@ if "hidden_history" not in st.session_state:
 #             else:
 #                 st.error("Identifiants incorrects")
 
-# # ==============================
-# # 🔹 ROUTING AUTH
-# # ==============================
+# # # ==============================
+# # #  ROUTING AUTH
+# # # ==============================
 # if not st.session_state.authenticated:
 #     login()
 #     st.stop()
@@ -143,7 +97,7 @@ if "hidden_history" not in st.session_state:
 # ==============================
 st.sidebar.title("⚙️ Configuration")
 
-#st.sidebar.markdown(f"👤 {st.session_state.username}")
+# st.sidebar.markdown(f"👤 {st.session_state.username}")
 
 if st.sidebar.button("Logout"):
     st.session_state.authenticated = False
@@ -154,9 +108,8 @@ mode = st.sidebar.radio(
     [
         "Question (RAG)",
         "Question (Sans RAG)",
-        "Analyse incohérences",
-        "Score de conformité",
-        "OCR (Vision)"
+        "Ingestion 📥"
+        
     ]
 )
 
@@ -164,58 +117,22 @@ if "last_mode" not in st.session_state:
     st.session_state.last_mode = mode
 
 if st.session_state.last_mode != mode:
-    st.session_state.selected_history = None
+    # reset complet UI
+    st.session_state.chat_history = []
+    st.session_state.last_score = None
+    st.session_state.input_value = ""
+
     st.session_state.last_mode = mode
 
-doc_type = st.sidebar.selectbox("Type", ["ALL", "AMM", "REPORT"])
-
-st.sidebar.markdown("---")
-
-visible_history = [
-    h for h in st.session_state.history
-    if h not in st.session_state.get("hidden_history", [])
-]
-
-st.sidebar.subheader("📜 Historique")
-
-for i, item in enumerate(reversed(visible_history[-5:])):
-
-    col1, col2 = st.sidebar.columns([4,1])
-
-    label = item["query"] if isinstance(item, dict) else item
-
-    with col1:
-        if st.button(label, key=f"history_{i}"):
-            if isinstance(item, dict):
-                st.session_state.selected_history = item
-            else:
-                st.session_state.input_input = item["query]"]
-
-        with col2:
-            if st.button("❌", key=f"delete_{i}"):
-
-                if "hidden_history" not in st.session_state:
-                    st.session_state.hidden_history = []
-
-                st.session_state.hidden_history.append(item)
-
-                save_hidden(st.session_state.hidden_history)  # 🔥 IMPORTANT
-
-                st.rerun()
-                       
-
-# ✅ EN DEHORS DE LA BOUCLE
-st.sidebar.markdown("---")
-
-if st.sidebar.button("🗑️ Effacer tout l’historique", key="clear_history"):
-    st.session_state.history = []
     st.rerun()
+
+st.sidebar.markdown("---")
 
 st.sidebar.markdown("---")
 st.sidebar.info("🔐 Données sensibles")
 
 st.sidebar.markdown(
-    "<p style='font-size:12px; color:#4A6FA5;'>Traitement conforme aux règles internes de confidentialité créé par Ghood.</p>",
+    "<p style='font-size:12px; color:#4A6FA5;'>Traitement conforme aux règles internes de confidentialité.</p>",
     unsafe_allow_html=True
 )
 
@@ -255,7 +172,7 @@ st.markdown(
             margin: 0;
             letter-spacing: 1px;
         ">
-            Projet final : The AI on Azure !
+            E5 MBA Data - PLG Projet Pédagogique
         </p>
     </div>
     """,
@@ -265,38 +182,75 @@ st.markdown(
 # Image
 st.markdown(
     "<div style='display:flex; justify-content:center;'>"
-    "<img src='https://images.pexels.com/photos/25107261/pexels-photo-25107261.jpeg' width='400'>"
+    "<img src='https://images.pexels.com/photos/13687210/pexels-photo-13687210.png' width='600'>"
     "</div>",
     unsafe_allow_html=True
 )
 
 # Titre
 st.markdown(
-    "<h1 style='text-align:center;'>TechnOps Assistant</h1>"
+    "<h1 style='text-align:center;'>CheckOps</h1>"
     "<p style='text-align:center; font-size:25px; color:#4A6FA5;'>Maintenance • Analyse • IA</p>",
     unsafe_allow_html=True
 )
 
 # ==============================
-# 🔹 MODE OCR
+# 🔹Ingestion des documents
 # ==============================
-if mode == "OCR (Vision)":
+if mode == "Ingestion 📥":
 
-    st.subheader("📷 Upload & Indexation OCR")
+    st.subheader("📥 Upload & Indexation")
 
-    uploaded_file = st.file_uploader("Upload image (PNG/JPG)", type=["png", "jpg", "jpeg"])
+    from core.vector_store import clear_collection
+
+    if st.button("Vider l'index"):
+        with st.spinner("Suppression en cours..."):
+            clear_collection()
+        st.success("Index vidé")
+    
+    uploaded_file = st.file_uploader(
+        "Upload fichier (Image, PDF, DOCX, TXT)",
+        type=["png", "jpg", "jpeg", "pdf", "docx", "txt"]
+    )
 
     if uploaded_file:
+
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
             tmp.write(uploaded_file.read())
             temp_path = tmp.name
 
-        if st.button("📥 Indexer l'image"):
+        if st.button("📥 Indexer le document"):
+
             with st.spinner("Indexation en cours..."):
 
-                nb_chunks = ingest_ocr_pipeline(temp_path)
+                file_type = uploaded_file.name.split(".")[-1].lower()
 
-            st.success(f"✅ Image indexée ({nb_chunks} chunks ajoutés)")
+                # ROUTING
+                if file_type in ["png", "jpg", "jpeg"]:
+                    nb_chunks = ingest_ocr_pipeline(temp_path)
+
+                else:  
+                    from core.indexing import index_chunks        
+                    filename = uploaded_file.name.lower().strip() 
+
+                    chunks = ingest_document(temp_path, file_type)
+                    index_chunks(chunks)
+                    nb_chunks = len(chunks)               
+
+            if nb_chunks > 0:
+                st.success(f"✅ Document indexé ({nb_chunks} chunks)")
+            
+
+    st.markdown("""
+    <style>
+    [data-testid="stFileUploaderDropzone"] {
+        background-color: #41488C !important;  /* ta couleur */
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # ==============================
 # 🔹 AUTRES MODES (RAG)
 # ==============================
@@ -341,11 +295,12 @@ for msg in st.session_state.chat_history:
             border-radius:10px;
             margin-bottom:10px;
             text-align:right;
+            font-weight:500;
         ">
         {msg["content"]}
         </div>
         """, unsafe_allow_html=True)
-
+    
     else:
         st.markdown(f"""
         <div style="
@@ -353,12 +308,24 @@ for msg in st.session_state.chat_history:
             color: rgb(4 40 112);
             padding: 12px;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-align: left;
         ">
         {msg["content"]}
         </div>
         """, unsafe_allow_html=True)
+    
+    # affichage des sources
+        if msg.get("sources"):
+            with st.expander("Sources utilisées"):
+                for d in msg["sources"]:
+                    st.markdown(f"**📄 {d.get('title', 'Document')}**")
+                    st.write(d["content"][:200])
+
+        # affichage score par message
+        if msg.get("score") is not None:
+            st.caption(f"Score de pertinence : {msg['score']}/100")
+            
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -372,11 +339,11 @@ with st.container():
     with st.form(key="search_form", clear_on_submit=False):
 
         col1, col2 = st.columns([4, 1])
-
+        
         with col1:
             query = st.text_input(
                 "",
-                placeholder="Rechercher dans TechnOps...",
+                placeholder="CheckOps — votre question de maintenance…",
                 key="input_value",
                 label_visibility="collapsed"
             )
@@ -384,32 +351,9 @@ with st.container():
         with col2:
             run = st.form_submit_button("Analyser")
 
-# Affichage historique sélectionné 
-
-if st.session_state.get("selected_history") and not (run and query):
-
-    st.markdown("### 📜 Détail de la recherche")
-
-    st.markdown(
-        f"**Question :** {st.session_state.selected_history['query']}"
-    )
-
-    st.markdown(f"""
-    <div style="
-        background-color:#163d2b;
-        color:#b9fbc0;
-        padding:20px;
-        border-radius:12px;
-        font-size:16px;
-        margin-bottom:20px;
-    ">
-    {st.session_state.selected_history['answer']}
-    </div>
-    """, unsafe_allow_html=True)
 
 if run and query:
-    st.session_state.selected_history = None
-
+   
     # USER MESSAGE
     st.session_state.chat_history.append({
         "role": "user",
@@ -418,58 +362,63 @@ if run and query:
                                          
     with st.spinner("Analyse en cours..."):
 
-        selected_type = None if doc_type == "ALL" else doc_type
+        selected_type = None
         
         from corpus import evaluate_rag
 
         if mode == "Question (RAG)":
-            answer, docs = rag_query(query, doc_type=selected_type)
-            score = evaluate_rag(answer, docs)
-            st.caption(f"📊 Score RAG : {score}/100")
-                                
+            answer, docs = rag_query(query)
+            score = evaluate_rag(query, docs)
+            st.session_state.last_score = score
+                              
         elif mode == "Question (Sans RAG)":
             answer = no_rag_answer(query)
             docs = []
 
         elif mode == "Analyse incohérences":
             answer = detect_inconsistencies(query)
-            docs = search_documents(query, doc_type=selected_type)
+            docs = search_documents(query)
 
         else:
             answer = compliance_score(query)
-            docs = search_documents(query, doc_type=selected_type)
-    st.session_state.history.append({
-        "query": query,
-        "answer": answer
-    })
+            docs = search_documents(query)
 
     # ASSISTANT MESSAGE
+
     st.session_state.chat_history.append({
         "role": "assistant",
-        "content": answer
+        "content": answer,
+        "score": st.session_state.get("last_score"),
+        "sources": docs
     })
 
-    st.session_state.reset_input = True
-    st.rerun()
+# Généréation du fichier pdf de la conversation
 
-    save_history(st.session_state.history)
-              
     pdf_file = generate_pdf(query, answer, docs)
 
-    # Nettoyage du nom de fichier
     safe_name = re.sub(r'[^a-zA-Z0-9]', '_', query)[:50]
 
     with open(pdf_file, "rb") as f:
-        st.download_button(
-            label="📄 Télécharger PDF",
-            data=f,
-            file_name=f"{safe_name}.pdf",
-            mime="application/pdf"
-        )
-                        
+        st.session_state.last_pdf = f.read()
+        st.session_state.last_pdf_name = f"{safe_name}.pdf"
+    
+    
+    st.session_state.reset_input = True
+    st.rerun()  
+                       
     if docs:
         with st.expander("📄 Sources"):
             for d in docs:
+                st.markdown(f"**📄 {d.get('title', 'Document')}**")
                 st.write(d["content"][:200])
 
 st.markdown('</div>', unsafe_allow_html=True)
+
+# affichage persistant du PDF
+if "last_pdf" in st.session_state:
+    st.download_button(
+        label="📄 Télécharger PDF",
+        data=st.session_state.last_pdf,
+        file_name=st.session_state.last_pdf_name,
+        mime="application/pdf"
+    )

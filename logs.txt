@@ -1,1 +1,85 @@
-2026-03-28 23:53:16.719730 | Question (RAG) | What systems are affected by a hydraulic pump failure?
+{"time": "2026-04-12T22:31:18", "level": "INFO", "message": "RAG query received", "query": "Ca va?", "doc_type": null}
+{"time": "2026-04-12T22:31:22", "level": "INFO", "message": "LLM generation completed", "latency": 1.0072834491729736, "nb_tokens_context": 563}
+{"time": "2026-04-12T22:31:22", "level": "INFO", "message": "RAG query completed", "query": "Ca va?", "latency": 4.005572080612183, "nb_docs": 1}
+{"time": "2026-04-13T21:29:23", "level": "INFO", "message": "RAG query received", "query": "bonjour", "doc_type": null}
+{"time": "2026-04-13T21:29:23", "level": "INFO", "message": "Greeting detected", "query": "bonjour", "latency": 0.0017232894897460938, "nb_docs": 0}
+{"time": "2026-04-13T21:33:48", "level": "INFO", "message": "RAG query received", "query": "c'est quoi un profil CORE", "doc_type": null}
+{"time": "2026-04-13T21:33:48", "level": "WARNING", "message": "No documents found", "query": "c'est quoi un profil CORE", "latency": 0.28827762603759766, "nb_docs": 0}
+{"time": "2026-04-13T21:48:21", "level": "INFO", "message": "RAG query received", "query": "Bonsoir", "doc_type": null}
+{"time": "2026-04-13T21:48:21", "level": "INFO", "message": "Greeting detected", "query": "Bonsoir", "latency": 0.00015997886657714844, "nb_docs": 0}
+{"time": "2026-04-13T21:48:25", "level": "INFO", "message": "RAG query received", "query": "Bonsoir", "doc_type": null}
+{"time": "2026-04-13T21:48:25", "level": "INFO", "message": "Greeting detected", "query": "Bonsoir", "latency": 0.00016951560974121094, "nb_docs": 0}
+{"time": "2026-04-13T21:48:53", "level": "INFO", "message": "RAG query received", "query": "c'est quoi un train d'atterissage?", "doc_type": null}
+{"time": "2026-04-13T21:48:54", "level": "WARNING", "message": "No documents found", "query": "c'est quoi un train d'atterissage?", "latency": 0.16827178001403809, "nb_docs": 0}
+{"time": "2026-04-13T21:49:00", "level": "INFO", "message": "RAG query received", "query": "c'est quoi un train d'atterissage?", "doc_type": null}
+{"time": "2026-04-13T21:49:00", "level": "WARNING", "message": "No documents found", "query": "c'est quoi un train d'atterissage?", "latency": 0.15940427780151367, "nb_docs": 0}
+{"time": "2026-04-13T21:50:13", "level": "INFO", "message": "RAG query received", "query": "bonjour", "doc_type": null}
+{"time": "2026-04-13T21:50:13", "level": "INFO", "message": "Greeting detected", "query": "bonjour", "latency": 0.0002605915069580078, "nb_docs": 0}
+{"time": "2026-04-13T21:54:58", "level": "INFO", "message": "RAG query received", "query": "Bonsoir", "doc_type": null}
+{"time": "2026-04-13T21:54:58", "level": "INFO", "message": "Greeting detected", "query": "Bonsoir", "latency": 0.0004210472106933594, "nb_docs": 0}
+{"time": "2026-04-14T22:40:57", "level": "INFO", "message": "RAG query received", "query": "Comment faire les manupilations au sol?", "doc_type": null}
+{"time": "2026-04-14T22:40:57", "level": "ERROR", "message": "RAG query failed", "query": "Comment faire les manupilations au sol?", "error": "Error getting collection: Collection [941ac80e-a54e-4c58-b0de-518b753fc3c6] does not exist.", "latency": 0.17124533653259277}
+{"time": "2026-04-14T22:41:11", "level": "INFO", "message": "RAG query received", "query": "Bonsoir", "doc_type": null}
+{"time": "2026-04-14T22:41:11", "level": "INFO", "message": "Greeting detected", "query": "Bonsoir", "latency": 0.00016546249389648438, "nb_docs": 0}
+{"time": "2026-04-14T22:41:18", "level": "INFO", "message": "RAG query received", "query": "Comment fonctionne le système carburant de l’APM20 EdA3 ?", "doc_type": null}
+{"time": "2026-04-14T22:41:19", "level": "ERROR", "message": "RAG query failed", "query": "Comment fonctionne le système carburant de l’APM20 EdA3 ?", "error": "Error getting collection: Collection [941ac80e-a54e-4c58-b0de-518b753fc3c6] does not exist.", "latency": 0.6888754367828369}
+{"time": "2026-04-14T22:41:54", "level": "INFO", "message": "RAG query received", "query": "c'est quoi un moteur turboprop?", "doc_type": null}
+{"time": "2026-04-14T22:41:57", "level": "ERROR", "message": "RAG query failed", "query": "c'est quoi un moteur turboprop?", "error": "Error getting collection: Collection [941ac80e-a54e-4c58-b0de-518b753fc3c6] does not exist.", "latency": 2.541127920150757}
+{"time": "2026-04-14T22:50:01", "level": "INFO", "message": "RAG query received", "query": "Quel est le liquide des freins?", "doc_type": null}
+{"time": "2026-04-14T22:50:01", "level": "WARNING", "message": "No documents found", "query": "Quel est le liquide des freins?", "latency": 0.2796924114227295, "nb_docs": 0}
+{"time": "2026-04-14T22:50:17", "level": "INFO", "message": "RAG query received", "query": "huile freins", "doc_type": null}
+{"time": "2026-04-14T22:50:18", "level": "WARNING", "message": "No documents found", "query": "huile freins", "latency": 0.21098661422729492, "nb_docs": 0}
+{"time": "2026-04-14T22:50:37", "level": "INFO", "message": "RAG query received", "query": "comment se fait lubrification?", "doc_type": null}
+{"time": "2026-04-14T22:50:38", "level": "WARNING", "message": "No documents found", "query": "comment se fait lubrification?", "latency": 0.7769112586975098, "nb_docs": 0}
+{"time": "2026-04-14T22:51:48", "level": "INFO", "message": "RAG query received", "query": "Comment se font les manipulations au sol?", "doc_type": null}
+{"time": "2026-04-14T22:51:52", "level": "WARNING", "message": "No documents found", "query": "Comment se font les manipulations au sol?", "latency": 4.548290014266968, "nb_docs": 0}
+{"time": "2026-04-15T00:14:47", "level": "INFO", "message": "RAG query received", "query": "liquide de freins", "doc_type": null}
+{"time": "2026-04-15T00:15:04", "level": "ERROR", "message": "RAG query failed", "query": "liquide de freins", "error": "Error getting collection: Collection [8f130e12-3463-4206-bbff-7e518269c2ab] does not exist.", "latency": 17.26784610748291}
+{"time": "2026-04-15T00:15:31", "level": "INFO", "message": "RAG query received", "query": "manipulations au sol", "doc_type": null}
+{"time": "2026-04-15T00:15:32", "level": "ERROR", "message": "RAG query failed", "query": "manipulations au sol", "error": "Error getting collection: Collection [8f130e12-3463-4206-bbff-7e518269c2ab] does not exist.", "latency": 0.8798558712005615}
+{"time": "2026-04-15T00:18:48", "level": "INFO", "message": "RAG query received", "query": "liquide de freins", "doc_type": null}
+{"time": "2026-04-15T00:18:50", "level": "INFO", "message": "LLM generation completed", "latency": 1.1857883930206299, "nb_tokens_context": 1370}
+{"time": "2026-04-15T00:18:50", "level": "INFO", "message": "RAG query completed", "query": "liquide de freins", "latency": 1.3458256721496582, "nb_docs": 3}
+{"time": "2026-04-15T00:22:19", "level": "INFO", "message": "RAG query received", "query": "comment se font les manipulations au sol?", "doc_type": null}
+{"time": "2026-04-15T00:22:21", "level": "INFO", "message": "LLM generation completed", "latency": 1.7395062446594238, "nb_tokens_context": 1306}
+{"time": "2026-04-15T00:22:21", "level": "INFO", "message": "RAG query completed", "query": "comment se font les manipulations au sol?", "latency": 1.8983111381530762, "nb_docs": 3}
+{"time": "2026-04-15T18:54:44", "level": "INFO", "message": "RAG query received", "query": "Quelle huiles est utilisée pour les freins?", "doc_type": null}
+{"time": "2026-04-15T18:54:46", "level": "WARNING", "message": "No documents found", "query": "Quelle huiles est utilisée pour les freins?", "latency": 1.9393525123596191, "nb_docs": 0}
+{"time": "2026-04-15T18:55:01", "level": "INFO", "message": "RAG query received", "query": "Bonjour", "doc_type": null}
+{"time": "2026-04-15T18:55:01", "level": "INFO", "message": "Greeting detected", "query": "Bonjour", "latency": 0.0003368854522705078, "nb_docs": 0}
+{"time": "2026-04-15T18:55:14", "level": "INFO", "message": "RAG query received", "query": "Décris le circuit de refroidissement du moteur?", "doc_type": null}
+{"time": "2026-04-15T18:55:14", "level": "WARNING", "message": "No documents found", "query": "Décris le circuit de refroidissement du moteur?", "latency": 0.17767071723937988, "nb_docs": 0}
+{"time": "2026-04-15T19:00:25", "level": "INFO", "message": "RAG query received", "query": "quelle huile est utilisée pour les freins?", "doc_type": null}
+{"time": "2026-04-15T19:00:25", "level": "WARNING", "message": "No documents found", "query": "quelle huile est utilisée pour les freins?", "latency": 0.1895599365234375, "nb_docs": 0}
+{"time": "2026-04-15T19:02:04", "level": "INFO", "message": "RAG query received", "query": "huile frein", "doc_type": null}
+{"time": "2026-04-15T19:02:04", "level": "WARNING", "message": "No documents found", "query": "huile frein", "latency": 0.14406418800354004, "nb_docs": 0}
+{"time": "2026-04-15T19:06:28", "level": "INFO", "message": "RAG query received", "query": "huile frein", "doc_type": null}
+{"time": "2026-04-15T19:06:29", "level": "WARNING", "message": "No documents found", "query": "huile frein", "latency": 0.1810743808746338, "nb_docs": 0}
+{"time": "2026-04-15T19:09:01", "level": "INFO", "message": "RAG query received", "query": "huile frein", "doc_type": null}
+{"time": "2026-04-15T19:09:02", "level": "WARNING", "message": "No documents found", "query": "huile frein", "latency": 1.0382592678070068, "nb_docs": 0}
+{"time": "2026-04-15T19:11:33", "level": "INFO", "message": "RAG query received", "query": "huile frein", "doc_type": null}
+{"time": "2026-04-15T19:11:33", "level": "WARNING", "message": "No documents found", "query": "huile frein", "latency": 0.16712355613708496, "nb_docs": 0}
+{"time": "2026-04-15T19:14:01", "level": "INFO", "message": "RAG query received", "query": "huile frein", "doc_type": null}
+{"time": "2026-04-15T19:14:02", "level": "WARNING", "message": "No documents found", "query": "huile frein", "latency": 1.0348875522613525, "nb_docs": 0}
+{"time": "2026-04-15T20:17:33", "level": "INFO", "message": "RAG query received", "query": "liquide de freins", "doc_type": null}
+{"time": "2026-04-15T20:17:33", "level": "ERROR", "message": "RAG query failed", "query": "liquide de freins", "error": "Error getting collection: Collection [c84671ce-3c9c-432b-96ac-228e602640a9] does not exist.", "latency": 0.2945237159729004}
+{"time": "2026-04-15T20:18:41", "level": "INFO", "message": "RAG query received", "query": "Comment la manipulation au sol?", "doc_type": null}
+{"time": "2026-04-15T20:18:42", "level": "ERROR", "message": "RAG query failed", "query": "Comment la manipulation au sol?", "error": "Error getting collection: Collection [c84671ce-3c9c-432b-96ac-228e602640a9] does not exist.", "latency": 0.17551946640014648}
+{"time": "2026-04-15T20:22:35", "level": "INFO", "message": "RAG query received", "query": "huiles de freins?", "doc_type": null}
+{"time": "2026-04-15T20:22:41", "level": "INFO", "message": "LLM generation completed", "latency": 0.6901237964630127, "nb_tokens_context": 904}
+{"time": "2026-04-15T20:22:41", "level": "INFO", "message": "RAG query completed", "query": "huiles de freins?", "latency": 6.183994770050049, "nb_docs": 3}
+{"time": "2026-04-15T20:22:59", "level": "INFO", "message": "RAG query received", "query": "comment se font les manipulations au sol?", "doc_type": null}
+{"time": "2026-04-15T20:23:01", "level": "INFO", "message": "LLM generation completed", "latency": 2.0746753215789795, "nb_tokens_context": 904}
+{"time": "2026-04-15T20:23:01", "level": "INFO", "message": "RAG query completed", "query": "comment se font les manipulations au sol?", "latency": 2.240748167037964, "nb_docs": 3}
+{"time": "2026-04-15T20:23:58", "level": "INFO", "message": "RAG query received", "query": "c'est quoi le type de moteur utilisé sur cet avion?", "doc_type": null}
+{"time": "2026-04-15T20:23:58", "level": "INFO", "message": "LLM generation completed", "latency": 0.5678284168243408, "nb_tokens_context": 904}
+{"time": "2026-04-15T20:23:58", "level": "INFO", "message": "RAG query completed", "query": "c'est quoi le type de moteur utilisé sur cet avion?", "latency": 0.730804443359375, "nb_docs": 3}
+{"time": "2026-04-15T20:24:45", "level": "INFO", "message": "RAG query received", "query": "Comment faire les manipulations au sol?", "doc_type": null}
+{"time": "2026-04-15T20:24:47", "level": "INFO", "message": "LLM generation completed", "latency": 1.8150544166564941, "nb_tokens_context": 1306}
+{"time": "2026-04-15T20:24:47", "level": "INFO", "message": "RAG query completed", "query": "Comment faire les manipulations au sol?", "latency": 2.0075647830963135, "nb_docs": 3}
+{"time": "2026-04-15T20:25:09", "level": "INFO", "message": "RAG query received", "query": "huile des freins utilisée?", "doc_type": null}
+{"time": "2026-04-15T20:25:10", "level": "INFO", "message": "LLM generation completed", "latency": 0.9607782363891602, "nb_tokens_context": 1381}
+{"time": "2026-04-15T20:25:10", "level": "INFO", "message": "RAG query completed", "query": "huile des freins utilisée?", "latency": 1.1321768760681152, "nb_docs": 3}
+{"time": "2026-04-15T20:39:04", "level": "INFO", "message": "RAG query received", "query": "quelle est la forme de l'empennage?", "doc_type": null}
+{"time": "2026-04-15T20:39:05", "level": "INFO", "message": "LLM generation completed", "latency": 0.8080692291259766, "nb_tokens_context": 1291}
+{"time": "2026-04-15T20:39:05", "level": "INFO", "message": "RAG query completed", "query": "quelle est la forme de l'empennage?", "latency": 1.001230239868164, "nb_docs": 3}

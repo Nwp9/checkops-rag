@@ -1,34 +1,29 @@
-from azure.search.documents import SearchClient
-from azure.core.credentials import AzureKeyCredential
-import os
-from dotenv import load_dotenv
+from core.vector_store import get_collection
+collection = get_collection()
 
 from core.embeddings import get_embedding
-
-load_dotenv()
-
-search_client = SearchClient(
-    endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
-    index_name=os.getenv("AZURE_SEARCH_INDEX_NAME"),
-    credential=AzureKeyCredential(os.getenv("AZURE_SEARCH_KEY"))
-)
-
+import hashlib
+from core.vector_store import client
+import time
 
 def index_chunks(chunks):
 
-    documents = []
-
-    for i, chunk in enumerate(chunks):
+    for chunk in chunks:
 
         embedding = get_embedding(chunk["content"])
+        chunk_id = hashlib.md5((chunk["content"] + str(time.time())).encode()).hexdigest()
 
-        documents.append({
-            "id": f"{chunk['source']}_{i}",
-            "content": chunk["content"],
-            "embedding": embedding,
-            "source": chunk["source"],
-            "type": chunk["type"],
-            "section": chunk["section"]
-        })
+        collection.add(
+            documents=[chunk["content"]],
+            embeddings=[embedding],
+            ids=[chunk_id],
+            metadatas=[{
+                "title": chunk.get("title", ""),
+                "source": chunk.get("source", ""),
+                "type": chunk.get("type", ""),
+                "section": chunk.get("section", "")
+            }]
+        )
 
-    search_client.upload_documents(documents)
+    print("Chunks indexés :", len(chunks))
+    print("Total en base :", collection.count())
