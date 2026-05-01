@@ -83,3 +83,35 @@
 {"time": "2026-04-15T20:39:04", "level": "INFO", "message": "RAG query received", "query": "quelle est la forme de l'empennage?", "doc_type": null}
 {"time": "2026-04-15T20:39:05", "level": "INFO", "message": "LLM generation completed", "latency": 0.8080692291259766, "nb_tokens_context": 1291}
 {"time": "2026-04-15T20:39:05", "level": "INFO", "message": "RAG query completed", "query": "quelle est la forme de l'empennage?", "latency": 1.001230239868164, "nb_docs": 3}
+{"time": "2026-04-15T22:12:37", "level": "INFO", "message": "RAG query received", "query": "Où se trouve la  Durit de reniflard (TH238309 DIN 7379)?", "doc_type": null}
+{"time": "2026-04-15T22:12:38", "level": "INFO", "message": "LLM generation completed", "latency": 1.4202096462249756, "nb_tokens_context": 1227}
+{"time": "2026-04-15T22:12:38", "level": "INFO", "message": "RAG query completed", "query": "Où se trouve la  Durit de reniflard (TH238309 DIN 7379)?", "latency": 1.6101951599121094, "nb_docs": 3}
+{"time": "2026-04-15T22:15:10", "level": "INFO", "message": "RAG query received", "query": "Comment se fait la mesure de l'equilibrage des gouvernes?", "doc_type": null}
+{"time": "2026-04-15T22:15:11", "level": "INFO", "message": "LLM generation completed", "latency": 1.5354313850402832, "nb_tokens_context": 1217}
+{"time": "2026-04-15T22:15:11", "level": "INFO", "message": "RAG query completed", "query": "Comment se fait la mesure de l'equilibrage des gouvernes?", "latency": 1.7244808673858643, "nb_docs": 3}
+{"time": "2026-04-15T22:16:09", "level": "INFO", "message": "RAG query received", "query": "Quel est le diamètre des ailerons?", "doc_type": null}
+{"time": "2026-04-15T22:16:11", "level": "INFO", "message": "LLM generation completed", "latency": 1.1829910278320312, "nb_tokens_context": 1236}
+{"time": "2026-04-15T22:16:11", "level": "INFO", "message": "RAG query completed", "query": "Quel est le diamètre des ailerons?", "latency": 1.3363780975341797, "nb_docs": 3}
+{"time": "2026-04-15T22:17:14", "level": "INFO", "message": "RAG query received", "query": "De quoi est composé l'avion APM 20 lionceau?", "doc_type": null}
+{"time": "2026-04-15T22:17:15", "level": "INFO", "message": "LLM generation completed", "latency": 1.3280847072601318, "nb_tokens_context": 1380}
+{"time": "2026-04-15T22:17:15", "level": "INFO", "message": "RAG query completed", "query": "De quoi est composé l'avion APM 20 lionceau?", "latency": 1.501887321472168, "nb_docs": 3}
+{"time": "2026-04-15T22:17:41", "level": "INFO", "message": "RAG query received", "query": "la puissance de son moteur?", "doc_type": null}
+{"time": "2026-04-15T22:17:42", "level": "INFO", "message": "LLM generation completed", "latency": 0.6115624904632568, "nb_tokens_context": 1258}
+{"time": "2026-04-15T22:17:42", "level": "INFO", "message": "RAG query completed", "query": "la puissance de son moteur?", "latency": 0.795323371887207, "nb_docs": 3}
+{"time": "2026-04-15T22:18:01", "level": "INFO", "message": "RAG query received", "query": "c'est quoi 80 CV?", "doc_type": null}
+{"time": "2026-04-15T22:18:02", "level": "INFO", "message": "LLM generation completed", "latency": 0.8261904716491699, "nb_tokens_context": 1273}
+{"time": "2026-04-15T22:18:02", "level": "INFO", "message": "RAG query completed", "query": "c'est quoi 80 CV?", "latency": 0.9842510223388672, "nb_docs": 3}
+{"time": "2026-04-15T22:19:48", "level": "INFO", "message": "RAG query received", "query": "c'est quoi son programme d'entretien?", "doc_type": null}
+{"time": "2026-04-15T22:19:51", "level": "INFO", "message": "LLM generation completed", "latency": 1.7727289199829102, "nb_tokens_context": 1247}
+{"time": "2026-04-15T22:19:51", "level": "INFO", "message": "RAG query completed", "query": "c'est quoi son programme d'entretien?", "latency": 2.119112968444824, "nb_docs": 3}
+{"time": "2026-04-15T22:31:46", "level": "INFO", "message": "RAG query received", "query": "Bonjour", "doc_type": null}
+{"time": "2026-04-15T22:31:46", "level": "INFO", "message": "Greeting detected", "query": "Bonjour", "latency": 0.00013566017150878906, "nb_docs": 0}
+{"time": "2026-04-15T22:31:54", "level": "INFO", "message": "RAG query received", "query": "comment se font les manipulations au sol?", "doc_type": null}
+{"time": "2026-04-15T22:31:56", "level": "INFO", "message": "LLM generation completed", "latency": 1.7512686252593994, "nb_tokens_context": 1306}
+{"time": "2026-04-15T22:31:56", "level": "INFO", "message": "RAG query completed", "query": "comment se font les manipulations au sol?", "latency": 1.9148406982421875, "nb_docs": 3}
+{"time": "2026-04-15T23:06:04", "level": "INFO", "message": "RAG query received", "query": "l'anémomètre se trouve où?", "doc_type": null}
+{"time": "2026-04-15T23:06:05", "level": "INFO", "message": "LLM generation completed", "latency": 0.9648725986480713, "nb_tokens_context": 1244}
+{"time": "2026-04-15T23:06:05", "level": "INFO", "message": "RAG query completed", "query": "l'anémomètre se trouve où?", "latency": 1.2217590808868408, "nb_docs": 3}
+{"time": "2026-04-28T23:12:14", "level": "INFO", "message": "RAG query received", "query": "Quel est le rôle de la pièce dans ce plan ?", "doc_type": null}
+{"time": "2026-04-28T23:12:16", "level": "INFO", "message": "LLM generation completed", "latency": 2.0835769176483154, "nb_tokens_context": 7446}
+{"time": "2026-04-28T23:12:16", "level": "INFO", "message": "RAG query completed", "query": "Quel est le rôle de la pièce dans ce plan ?", "latency": 2.182143449783325, "nb_docs": 3}
