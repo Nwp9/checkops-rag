@@ -12,9 +12,17 @@ def index_chunks(chunks):
     for chunk in chunks:
 
         embedding = get_embedding(chunk["content"])
-        chunk_id = hashlib.md5((chunk["content"] + str(time.time())).encode()).hexdigest()
+        chunk_id = hashlib.md5(
+            (
+                chunk.get("source", "") +
+                chunk.get("section", "") +
+                chunk["content"]
+            ).encode("utf-8")
+        ).hexdigest()
 
-        collection.add(
+        # chunk_id = hashlib.md5((chunk["content"] + str(time.time())).encode()).hexdigest()
+
+        collection.upsert(
             documents=[chunk["content"]],
             embeddings=[embedding],
             ids=[chunk_id],
