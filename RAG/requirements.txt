@@ -1,0 +1,13 @@
+openai
+streamlit
+chromadb
+python-dotenv
+prometheus-client
+PyPDF2
+reportlab
+python-docx
+networkx
+numpy
+azure-ai-vision-imageanalysis
+azure-core
+azure-search-documents
