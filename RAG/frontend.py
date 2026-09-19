@@ -48,55 +48,55 @@ if "last_graph" not in st.session_state:
 # ==============================
 # 🔐 USERS (HASH)
 # ==============================
-# def hash_pwd(pwd):
-#     return hashlib.sha256(pwd.encode()).hexdigest()
+def hash_pwd(pwd):
+    return hashlib.sha256(pwd.encode()).hexdigest()
 
-# USERS = {
-#     "admin": {"password": hash_pwd("admin123"), "role": "admin"},
-#     "engineer": {"password": hash_pwd("engineer123"), "role": "user"},
-#     "stagiaire": {"password": hash_pwd("stage123"), "role": "user"}
-# }
+USERS = {
+    "admin": {"password": hash_pwd("admin123"), "role": "admin"},
+    "engineer": {"password": hash_pwd("engineer123"), "role": "user"},
+    "stagiaire": {"password": hash_pwd("stage123"), "role": "user"}
+}
 
-# st.set_page_config(page_title="CheckOps", layout="wide", page_icon="🔩")
+st.set_page_config(page_title="CheckOps", layout="wide", page_icon="🔩")
 
 # ==============================
 # 🔹 SESSION AUTH
 # ==============================
-# if "authenticated" not in st.session_state:
-#     st.session_state.authenticated = False
-#     st.session_state.username = None
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+    st.session_state.username = None
 
 # ==============================
 # 🔐 LOGIN
 # ==============================
-# def login():
+def login():
 
-#     st.markdown("<h2 style='text-align:center;'>🔐 CheckOps</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center;'>🔐 CheckOps</h2>", unsafe_allow_html=True)
 
-#     col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 2, 1])
 
-#     with col2:
-#         with st.form("login_form"):
-#             username = st.text_input("Username")
-#             password = st.text_input("Password", type="password")
+    with col2:
+        with st.form("login_form"):
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
 
-#             submitted = st.form_submit_button("Login")
+            submitted = st.form_submit_button("Login")
 
-#             if submitted:
-#                 if username in USERS and USERS[username]["password"] == hash_pwd(password):
-#                     st.session_state.authenticated = True
-#                     st.session_state.username = username
-#                     st.success("Connexion réussie")
-#                     st.rerun()
-#                 else:
-#                     st.error("Identifiants incorrects")
+            if submitted:
+                if username in USERS and USERS[username]["password"] == hash_pwd(password):
+                    st.session_state.authenticated = True
+                    st.session_state.username = username
+                    st.success("Connexion réussie")
+                    st.rerun()
+                else:
+                    st.error("Identifiants incorrects")
 
 # ==============================
 # ROUTING AUTH
 # ==============================
-# if not st.session_state.authenticated:
-#     login()
-#     st.stop()
+if not st.session_state.authenticated:
+    login()
+    st.stop()
 
 # ==============================
 # 🔹 SIDEBAR
@@ -144,10 +144,19 @@ div[data-testid="stSidebar"] button[kind="secondary"] {
     color: #cbd5e1 !important;
 }
 
-/* bouton actif */
-div[data-testid="stSidebar"] button[kind="primary"] {
-    background: linear-gradient(90deg, #4f46e5, #3730a3) !important;
-    color: white !important;
+/* BOUTON ACTIF */
+div[data-testid="stSidebar"] .stButton > button[kind="primary"],
+div[data-testid="stSidebar"] .stButton > button[data-testid="stBaseButton-primary"],
+div[data-testid="stSidebar"] .stButton > button.st-emotion-cache-1rwb540 {
+    background: linear-gradient(90deg, #536DFE 0%, #7C3AED 100%) !important;
+    background-color: #536DFE !important;
+    color: #FFFFFF !important;
+    border-color: #6366F1 !important;
+}
+
+div[data-testid="stSidebar"] button[kind="primary"] p,
+div[data-testid="stSidebar"] button[data-testid="stBaseButton-primary"] p {
+    color: #FFFFFF !important;
 }
 
 /* hover */
@@ -160,11 +169,7 @@ div[data-testid="stSidebar"] button[kind="secondary"]:hover {
 """, unsafe_allow_html=True)
 
 st.sidebar.markdown(
-    """
-    <div class="sidebar-logo">
-        <span class="check">Check</span><span class="ops">Ops</span>
-    </div>
-    """,
+    """<div class="sidebar-logo"><span class="check">Check</span><span class="ops">Ops</span><div style="color:#7F8DA8;font-size:8px;font-weight:600;letter-spacing:2.5px;margin-top:7px;text-transform:uppercase;">Maintenance&nbsp;&nbsp;•&nbsp;&nbsp;Analyse&nbsp;&nbsp;•&nbsp;&nbsp;IA</div></div>""",
     unsafe_allow_html=True
 )
 
@@ -177,25 +182,61 @@ st.sidebar.markdown("---")
 if "mode_ui" not in st.session_state:
     st.session_state.mode_ui = "Assistant RAG"
 
-def nav_item(label, value, key):
+def nav_item(label, value, key, icon):
     active = st.session_state.mode_ui == value
 
     if st.sidebar.button(
         label,
         key=key,
+        icon=icon,
         use_container_width=True,
         type="primary" if active else "secondary"
     ):
         st.session_state.mode_ui = value
         st.rerun()
 
-nav_item("Accueil", "Accueil", "nav_accueil")
-nav_item("Assistant RAG", "Assistant RAG", "nav_rag")
-nav_item("Assistant Sans RAG", "Assistant Sans RAG", "nav_no_rag")
-nav_item("Ingestion", "Ingestion", "nav_ingestion")
-nav_item("Monitoring", "Monitoring", "nav_monitoring")
+nav_item("Accueil", "Accueil", "nav_accueil", ":material/home:")
+nav_item("Assistant RAG", "Assistant RAG", "nav_rag", ":material/chat_bubble_outline:")
+nav_item("Assistant Sans RAG", "Assistant Sans RAG", "nav_no_rag", ":material/description:")
+nav_item("Ingestion", "Ingestion", "nav_ingestion", ":material/cloud_upload:")
+nav_item("Monitoring", "Monitoring", "nav_monitoring", ":material/bar_chart:")
 
 mode = st.session_state.mode_ui
+
+# ==============================
+# STYLE DU BOUTON ACTIF
+# ==============================
+
+active_button_key = {
+    "Accueil": "nav_accueil",
+    "Assistant RAG": "nav_rag",
+    "Assistant Sans RAG": "nav_no_rag",
+    "Ingestion": "nav_ingestion",
+    "Monitoring": "nav_monitoring",
+}.get(mode)
+
+if active_button_key:
+    st.sidebar.markdown(
+        f"""
+        <style>
+        div[data-testid="stSidebar"] div.st-key-{active_button_key} button {{
+            background: linear-gradient(90deg, #536DFE 0%, #7C3AED 100%) !important;
+            color: #FFFFFF !important;
+            border: 1px solid rgba(124, 124, 255, 0.70) !important;
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25) !important;
+        }}
+
+        div[data-testid="stSidebar"] div.st-key-{active_button_key} button p {{
+            color: #FFFFFF !important;
+        }}
+
+        div[data-testid="stSidebar"] div.st-key-{active_button_key} button span {{
+            color: #FFFFFF !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 if "last_mode" not in st.session_state:
     st.session_state.last_mode = mode
@@ -208,11 +249,12 @@ if st.session_state.last_mode != mode:
     st.rerun()
 
 st.sidebar.markdown("---")
-st.sidebar.info("🔐 Données sensibles")
-
-st.sidebar.markdown(
-    "<p style='font-size:12px; color:#4A6FA5;'>Traitement conforme aux règles internes de confidentialité.</p>",
-    unsafe_allow_html=True
+st.sidebar.button(
+    "Données sensibles",
+    icon=":material/lock:",
+    key="sensitive_data",
+    use_container_width=True,
+    disabled=True
 )
 
 # ==============================
@@ -222,18 +264,73 @@ st.sidebar.markdown(
 st.sidebar.markdown(
     """
     <style>
-    .sidebar-footer {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 220px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+    /* Zone Logout fixée en bas de la sidebar */
+    div[data-testid="stSidebar"] div.st-key-logout_button {
+        position: fixed !important;
+        bottom: 22px !important;
+        left: 20px !important;
+        width: 272px !important;
 
-st.sidebar.markdown('<div class="sidebar-footer">', unsafe_allow_html=True)
+        padding-top: 18px !important;
+        border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
+
+        background: #262730 !important;
+        z-index: 999 !important;
+    }
+
+    /* Bouton Logout */
+    div[data-testid="stSidebar"] div.st-key-logout_button button {
+        width: auto !important;
+        min-height: 44px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        color: #F8FAFC !important;
+        gap: 12px !important;
+    }
+
+    /* Icône Logout */
+    div[data-testid="stSidebar"] div.st-key-logout_button button span[data-testid="stIconMaterial"] {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        border: 1px solid #475569 !important;
+        border-radius: 50% !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        color: #CBD5E1 !important;
+    }
+
+    /* Texte Logout */
+    div[data-testid="stSidebar"] div.st-key-logout_button button p {
+        color: #F8FAFC !important;
+        font-weight: 600 !important;
+        margin: 0 !important;
+    }
+
+        /* Bouton Logout */
+        div[data-testid="stSidebar"] div.st-key-logout_button button {
+            width: auto !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 8px 4px !important;
+            color: #F8FAFC !important;
+        }
+
+        /* Texte Logout */
+        div[data-testid="stSidebar"] div.st-key-logout_button button p {
+            color: #F8FAFC !important;
+            font-weight: 600 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 # User
 # st.sidebar.markdown(f"👤 {st.session_state.username}")
@@ -242,7 +339,12 @@ st.sidebar.markdown('<div class="sidebar-footer">', unsafe_allow_html=True)
 if "confirm_logout" not in st.session_state:
     st.session_state.confirm_logout = False
 
-if st.sidebar.button("Logout"):
+if st.sidebar.button(
+    "Logout",
+    icon=":material/logout:",
+    key="logout_button",
+    use_container_width=True
+):
     st.session_state.confirm_logout = True
 
 if st.session_state.confirm_logout:
@@ -261,9 +363,6 @@ if st.session_state.confirm_logout:
         if st.button("Non", key="confirm_logout_no"):
             st.session_state.confirm_logout = False
             st.rerun()
-
-
-st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # ==============================
 # 🔹 UI CENTRÉE
@@ -298,17 +397,11 @@ st.markdown('<div class="container">', unsafe_allow_html=True)
 
 st.markdown(
     """
-    <div class="card">
-        <p style="
-            color: rgb(250, 250, 250);
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin: 0;
-            letter-spacing: 1px;
-        ">
-            E5 MBA Data - PLG Projet Pédagogique
-        </p>
-    </div>
+    <section style="background:linear-gradient(135deg,#151b2b 0%,#1d2850 100%);border:1px solid #2c3654;border-radius:20px;padding:24px 30px 20px 30px;text-align:center;margin-bottom:26px;box-shadow:0 12px 35px rgba(0,0,0,0.22);">
+    <h2 style="font-size:1.75rem;font-weight:750;color:#F8FAFC;margin:0;padding:0;">Projet Pédagogique</h2>
+    <hr style="width:46px;height:2px;border:0;background:#6366F1;margin:12px auto 10px auto;">
+    <p style="font-size:1.05rem;font-weight:650;color:#818CF8;letter-spacing:0.8px;margin:0;padding:0;">Groupe 30</p>
+    </section>
     """,
     unsafe_allow_html=True
 )
@@ -324,14 +417,7 @@ st.markdown(
 )
 
 st.markdown(
-    """
-    <h1 style='text-align:center; font-size:48px; font-weight:800; margin-bottom:10px;'>
-        <span style='color:#7C7CFF;'>Check</span><span style='color:#FFFFFF;'>Ops</span>
-    </h1>
-    <p style='text-align:center; font-size:25px; color:#4A6FA5;'>
-        Maintenance • Analyse • IA
-    </p>
-    """,
+    """<section style="text-align:center;margin-top:18px;margin-bottom:12px;"><h1 style="font-size:2.65rem;font-weight:800;margin:0;letter-spacing:-1px;line-height:1.1;"><span style="color:#7C7CFF;">Check</span><span style="color:#FFFFFF;">Ops</span></h1><p style="color:#94A3B8;font-size:0.82rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;margin:14px 0 0 0;">Maintenance &nbsp;•&nbsp; Analyse &nbsp;•&nbsp; IA</p><hr style="width:54px;height:2px;border:0;background:#6366F1;margin:16px auto 0 auto;"></section>""",
     unsafe_allow_html=True
 )
 
